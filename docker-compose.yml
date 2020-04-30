@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  webapi:
+    image: ${ECR_HOST}/${IMAGE_WEBAPI}
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        order: start-first
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8080:5000"

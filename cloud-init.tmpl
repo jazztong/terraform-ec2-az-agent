@@ -1,0 +1,13 @@
+#cloud-config
+
+runcmd:
+  - yum update
+  - yum install -y docker amazon-ecr-credential-helper
+  - echo "ECR_HOST=${ecr_account}.dkr.ecr.${region}.amazonaws.com" >> /etc/environment
+  - service docker start
+  - systemctl enable docker
+  - usermod -aG docker ${user_name}
+  - docker swarm init
+  - mkdir -p /home/${user_name}/.docker
+  - echo '{"credHelpers":{"210636571704.dkr.ecr.ap-southeast-1.amazonaws.com":"ecr-login"}}' > /home/${user_name}/.docker/config.json
+  - touch /tmp/done
