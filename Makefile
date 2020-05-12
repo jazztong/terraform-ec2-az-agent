@@ -13,7 +13,9 @@ plan:
 
 apply:
 	terraform apply -auto-approve ${WORK_PATH}
-	terraform output private_pem > ~/sanbox.pem
+	mkdir ~/az
+	terraform output private_pem > ~/az/sanbox.pem
+	sudo chmod 600 ~/az/sanbox.pem
 
 kill:
 	terraform destroy -auto-approve ${WORK_PATH}
